@@ -55,28 +55,15 @@ MapReduce <- function(path_to_raw ){
   #Retrieve data into data frame 
   all_data <-ldply(file_list, read_csv)
   
-  ##################################
-  #####Testing
-  ################################
-  
-  samp_rows <- c(1:30, sample(1:(dim(all_data)[1]), 250))
-  data_test_orig <- all_data[samp_rows, ]
-  
-  colnames(data_test)
-  
-  #we will eventually want to select these later 
-  #we will need to filter by line_item but idk which ones are what right now so i'm just ignore them, can easily be added later
-  
-  #filter dates - probably need to change these
-  data_test <- data_test_orig %>%
-    #get columns we want
+  #data manipulation 
+  data_test <- all_data %>%
+    #get columns we want might want to change these eventually
     select(committee_name...2, report_year, entity_type, contributor_name, 
            contribution_receipt_amount, fec_election_year,
            donor_committee_name, fec_election_type_desc
     ) %>%
-    #chage to date format
-    mutate(fec_election_year = as.numeric(fec_election_year)) %>%
     #filter out dates 
+    mutate(fec_election_year = as.numeric(fec_election_year)) %>%
     filter(fec_election_year <= "2022" & fec_election_year >= "2012") %>%
     #nest by senator and donor
     group_by(committee_name...2, contributor_name, fec_election_year) %>%

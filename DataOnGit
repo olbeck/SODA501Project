@@ -7,9 +7,9 @@ To share data over github,
 
 3. In this file, load all the libraries functions, then, on line 98 replace raw_data_path with your file path to the raw data (do not have a "/" as the last character)
 
-4. Run lines 99 to run the MapReduce function. It took about 60 seconds for me. It will pop up with a bunch of messages and warnings, but as long as there are no errors, youre totally fine. 
+4. Run lines 85 to run the MapReduce function. It took about 60 seconds for me. It will pop up with a bunch of messages and warnings, but as long as there are no errors, youre totally fine. 
  
-5. Run line 102 to save your file as an .Rdata file. I named mine Olivia_Data.Rdata. Name yours similarly. 
+5. Run line 89 to save your file as an .Rdata file. I named mine Olivia_Data.Rdata. Name yours similarly. 
 
 6. Commit and push ONLY the .Rdata file. Do not push any of the raw data files. 
 
