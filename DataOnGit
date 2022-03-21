@@ -1,0 +1,17 @@
+To share data over github,
+
+1. Download data off FEC Website and save as firstname_lastname.csv
+	1.a) Save raw data to your personal laptop all in the same folder with nothing else in it,. Do NOT save raw data to same folder where you are storing the repo. (Your Rstudio will crash if you try to put the raw data in the same folder once you start committing because git can't handle files this large)
+
+2. Open R project and open file MapReduce.R
+
+3. In this file, load all the libraries functions, then, on line 98 replace raw_data_path with your file path to the raw data (do not have a "/" as the last character)
+
+4. Run lines 99 to run the MapReduce function. It took about 60 seconds for me. It will pop up with a bunch of messages and warnings, but as long as there are no errors, youre totally fine. 
+ 
+5. Run line 102 to save your file as an .Rdata file. I named mine Olivia_Data.Rdata. Name yours similarly. 
+
+6. Commit and push ONLY the .Rdata file. Do not push any of the raw data files. 
+
+7. Once we have all three .Rdata files, we can rbind() them and we will have our entire data set that we need. 
+
