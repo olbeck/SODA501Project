@@ -87,3 +87,8 @@ summarized_data <- MapReduce(raw_data_path)
 
 #save as .Rdata to push to master repo 
 save(summarized_data, file = "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/SODA501Project/Olivia_Data.Rdata")
+
+#Mitch McConnel
+raw_data_path <- "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/Mitch"
+mitch_Data <- MapReduce(raw_data_path)
+save(mitch_Data, file = "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/SODA501Project/Mitch_Data.Rdata")
