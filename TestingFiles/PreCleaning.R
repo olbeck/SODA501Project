@@ -21,7 +21,7 @@ all_data <-ldply(file_list, read_csv)
 ################################
 
 samp_rows <- c(1:30, sample(1:(dim(all_data)[1]), 250))
-data_test_orig <- all_data[samp_rows, ]
+data_test_orig <- all_data
 
 colnames(data_test)
 
@@ -33,14 +33,14 @@ data_test <- data_test_orig %>%
   #get columns we want
   select(committee_name...2, report_year, entity_type, contributor_name, 
          contribution_receipt_amount, fec_election_year,
-         donor_committee_name, fec_election_type_desc
+         donor_committee_name, fec_election_type_desc, committee_id
          ) %>%
   #chage to date format
   mutate(fec_election_year = as.numeric(fec_election_year)) %>%
   #filter out dates 
   filter(fec_election_year <= "2022" & fec_election_year >= "2012") %>%
   #nest by senator and donor
-  group_by(committee_name...2, contributor_name, fec_election_year) %>%
+  group_by(committee_id, contributor_name, fec_election_year) %>%
   nest() %>%
   #Get total contributions
   mutate(total_contribution = map_dbl(.x=data, .f = get_total)) %>%
