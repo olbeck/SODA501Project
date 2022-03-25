@@ -52,12 +52,14 @@ MapReduce <- function(path_to_raw ){
   names(file_list) <- temp_no_csv
   
   #Retrieve data into data frame 
-  all_data <-lapply(file_list, read.csv)
+  all_data <- map(file_list[1:5], function(x) {read_csv(x, col_types = list(.default = "c"))})
   all_data2 <- pmap(list(all_data, names(all_data)),
                     function(df, name) {
-                      df$name <- name
-                      df
+                      df %>%
+                        mutate(senator_name = name,
+                               across(everything(), ~as.character(.x)))
                     })
+  all_data2 <- bind_rows(all_data2)
   
   #data manipulation 
   data_test <- all_data %>%
