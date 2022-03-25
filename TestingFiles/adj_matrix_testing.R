@@ -3,6 +3,9 @@ summarized_data$committee_name
 summarized_data$committee_name <- gsub('[[:punct:] ]+', " ", summarized_data$committee_name)
 
 
+
+
+
 senators <- unique(summarized_data$committee_name)
 n <- length(senators)
 
@@ -21,6 +24,7 @@ for(i in 1:(n-1)){ # row senator
   }
 }
 
+library(igraph)
 
 adj_matrix <- (adj_matrix + t(adj_matrix))
 g <- graph_from_adjacency_matrix(adj_matrix, weighted = T, mode = c("undirected"))
@@ -39,7 +43,7 @@ for(i in 1:max(modulos$membership)){
 
 
 plot(g, vertex.color=vertex_attr(g)$cor,
-     #vertex.label=senators[1:10],
+     vertex.label=NA,
      #vertex.size=2*igraph::degree(g),
      edge.width=3*(edge_attr(g)$weight)/10000,
      layout = layout_in_circle, 
