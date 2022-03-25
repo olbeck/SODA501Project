@@ -60,7 +60,6 @@ MapReduce <- function(path_to_raw ){
                                across(everything(), ~as.character(.x)))
                     })
   all_data <- bind_rows(all_data)
-  all_data <- bind_rows(all_data)
   
   #data manipulation 
   data_test <- all_data %>%
