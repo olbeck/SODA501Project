@@ -60,13 +60,13 @@ MapReduce <- function(path_to_raw ){
     #get columns we want might want to change these eventually
     select(committee_name...2, report_year, entity_type, contributor_name, 
            contribution_receipt_amount, fec_election_year,
-           donor_committee_name, fec_election_type_desc
+           donor_committee_name, fec_election_type_desc, committee_id
     ) %>%
     #filter out dates 
     mutate(fec_election_year = as.numeric(fec_election_year)) %>%
     filter(fec_election_year <= "2022" & fec_election_year >= "2012") %>%
     #nest by senator and donor
-    group_by(committee_name...2, contributor_name, fec_election_year) %>%
+    group_by(committee_name...2, committee_id, fec_election_year) %>%
     nest() %>%
     #Get total contributions
     mutate(total_contribution = map_dbl(.x=data, .f = get_total)) %>%
