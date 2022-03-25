@@ -48,25 +48,36 @@ MapReduce <- function(path_to_raw ){
   #upload data to one file
   temp <- list.files(path = path_no_slash, 
                      pattern="*.csv")
+  temp_no_csv <- gsub(".csv", "", temp)
   file_list <- paste(path = path_w_slash, 
                      temp,
                      sep="")
+  names(file_list) <- temp_no_csv
   
   #Retrieve data into data frame 
-  all_data <-ldply(file_list, read_csv)
+  all_data <- map(file_list, function(x) {read_csv(x, col_types = list(.default = "c"))})
+  all_data <- pmap(list(all_data, names(all_data)),
+                   function(df, name) {
+                     df %>%
+                       mutate(senator_name = name,
+                              across(everything(), ~as.character(.x)))
+                   })
+  all_data <- bind_rows(all_data)
   
   #data manipulation 
   data_test <- all_data %>%
     #get columns we want might want to change these eventually
-    select(committee_name...2, report_year, entity_type, contributor_name, 
+    select(senator_name, report_year, entity_type, contributor_name, 
            contribution_receipt_amount, fec_election_year,
-           donor_committee_name, fec_election_type_desc, committee_id
+           donor_committee_name, fec_election_type_desc
     ) %>%
     #filter out dates 
     mutate(fec_election_year = as.numeric(fec_election_year)) %>%
     filter(fec_election_year <= "2022" & fec_election_year >= "2012") %>%
+    #change variable tyes
+    mutate(contribution_receipt_amount = as.numeric(contribution_receipt_amount)) %>%
     #nest by senator and donor
-    group_by(committee_name...2, committee_id, fec_election_year) %>%
+    group_by(senator_name, contributor_name, fec_election_year, fec_election_type_desc) %>%
     nest() %>%
     #Get total contributions
     mutate(total_contribution = map_dbl(.x=data, .f = get_total)) %>%
@@ -79,7 +90,6 @@ MapReduce <- function(path_to_raw ){
   
   return(data_test)
 }
-
 
 #get reduced data
 raw_data_path <- "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/RawData"

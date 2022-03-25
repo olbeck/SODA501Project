@@ -59,20 +59,23 @@ MapReduce <- function(path_to_raw ){
                         mutate(senator_name = name,
                                across(everything(), ~as.character(.x)))
                     })
-  all_data <- bind_rows(all_data2)
+  all_data <- bind_rows(all_data)
+  all_data <- bind_rows(all_data)
   
   #data manipulation 
   data_test <- all_data %>%
     #get columns we want might want to change these eventually
-    select(committee_name...2, report_year, entity_type, contributor_name, 
+    select(senator_name, report_year, entity_type, contributor_name, 
            contribution_receipt_amount, fec_election_year,
            donor_committee_name, fec_election_type_desc
     ) %>%
     #filter out dates 
     mutate(fec_election_year = as.numeric(fec_election_year)) %>%
     filter(fec_election_year <= "2022" & fec_election_year >= "2012") %>%
+    #change variable tyes
+    mutate(contribution_receipt_amount = as.numeric(contribution_receipt_amount)) %>%
     #nest by senator and donor
-    group_by(committee_name...2, contributor_name, fec_election_year) %>%
+    group_by(senator_name, contributor_name, fec_election_year, fec_election_type_desc) %>%
     nest() %>%
     #Get total contributions
     mutate(total_contribution = map_dbl(.x=data, .f = get_total)) %>%
