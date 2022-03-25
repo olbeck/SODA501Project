@@ -52,7 +52,7 @@ MapReduce <- function(path_to_raw ){
   names(file_list) <- temp_no_csv
   
   #Retrieve data into data frame 
-  all_data <- map(file_list[1:5], function(x) {read_csv(x, col_types = list(.default = "c"))})
+  all_data <- map(file_list, function(x) {read_csv(x, col_types = list(.default = "c"))})
   all_data <- pmap(list(all_data, names(all_data)),
                     function(df, name) {
                       df %>%
@@ -74,7 +74,7 @@ MapReduce <- function(path_to_raw ){
     #change variable tyes
     mutate(contribution_receipt_amount = as.numeric(contribution_receipt_amount)) %>%
     #nest by senator and donor
-    group_by(senator_name, contributor_name, fec_election_year) %>%
+    group_by(senator_name, contributor_name, fec_election_year, fec_election_type_desc) %>%
     nest() %>%
     #Get total contributions
     mutate(total_contribution = map_dbl(.x=data, .f = get_total)) %>%
