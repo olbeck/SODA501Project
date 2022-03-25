@@ -45,12 +45,19 @@ MapReduce <- function(path_to_raw ){
   #upload data to one file
   temp <- list.files(path = path_no_slash, 
                      pattern="*.csv")
+  temp_no_csv <- gsub(".csv", "", temp)
   file_list <- paste(path = path_w_slash, 
                      temp,
                      sep="")
+  names(file_list) <- temp_no_csv
   
   #Retrieve data into data frame 
-  all_data <-ldply(file_list, read_csv)
+  all_data <-lapply(file_list, read.csv)
+  all_data2 <- pmap(list(all_data, names(all_data)),
+                    function(df, name) {
+                      df$name <- name
+                      df
+                    })
   
   #data manipulation 
   data_test <- all_data %>%
@@ -78,7 +85,7 @@ MapReduce <- function(path_to_raw ){
 }
 
 #get reduced data
-raw_data_path <- "~/Downloads"
+raw_data_path <- "~/Downloads/"
 summarized_data <- MapReduce(raw_data_path)
 
 #save as .Rdata to push to master repo 
