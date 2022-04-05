@@ -1,8 +1,8 @@
-library(tidyverse)
 library(readr)
 library(plyr)
 library(dplyr)
-
+library(tidyr)
+library(purrr)
 
 ######################
 ### Internal Functions
@@ -24,9 +24,6 @@ get_type <- function(frame){
   type <- na.omit(type)
   return(as.character(type))
 }
-
-
-
 
 #####################
 ### Main Function
@@ -69,15 +66,17 @@ MapReduce <- function(path_to_raw ){
     #get columns we want might want to change these eventually
     select(senator_name, report_year, entity_type, contributor_name, 
            contribution_receipt_amount, fec_election_year,
-           donor_committee_name, fec_election_type_desc
+           donor_committee_name, fec_election_type_desc, 
+           contributor_street_1, contributor_zip #these two used for linking purposes
     ) %>%
     #filter out dates 
     mutate(fec_election_year = as.numeric(fec_election_year)) %>%
     filter(fec_election_year <= "2022" & fec_election_year >= "2012") %>%
-    #change variable tyes
+    #change variable types
     mutate(contribution_receipt_amount = as.numeric(contribution_receipt_amount)) %>%
     #nest by senator and donor
-    group_by(senator_name, contributor_name, fec_election_year, fec_election_type_descs) %>%
+    group_by(senator_name, contributor_name, fec_election_year, fec_election_type_desc,
+             contributor_street_1, contributor_zip) %>%
     nest() %>%
     #Get total contributions
     mutate(total_contribution = map_dbl(.x=data, .f = get_total)) %>%
@@ -86,19 +85,9 @@ MapReduce <- function(path_to_raw ){
     #Get donor type
     mutate(donor_type = map_chr(.x=data, .f = get_type)) %>%
     #Select only the things we care about.
-    select( - data)
+    select( ! c(data )) %>%
+    ungroup() %>%
+    select(!c(contributor_street_1))
   
   return(data_test)
 }
-
-#get reduced data
-raw_data_path <- "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/RawData"
-summarized_data <- MapReduce(raw_data_path)
-
-#save as .Rdata to push to master repo 
-save(summarized_data, file = "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/SODA501Project/Olivia_Data.Rdata")
-
-#Mitch McConnel
-raw_data_path <- "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/Mitch"
-mitch_Data <- MapReduce(raw_data_path)
-save(mitch_Data, file = "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/SODA501Project/Mitch_Data.Rdata")
