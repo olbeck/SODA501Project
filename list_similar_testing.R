@@ -5,6 +5,8 @@ list_similar <- function(adj_matix, senators){
   # adj_matix : adjacent matrix, output of make_adj_matrix, n-by-n matrix
   # senator : input of senator names used in adj_matrix, length n
   
+  #### Output
+  # data frame where columns are senators, and the list below is which senators share the most donors
   d <- length(senators)
   similar_mat <- data.frame(matrix(NA, nrow = d, ncol = d))
   colnames(similar_mat) <- senators
