@@ -87,7 +87,7 @@ MapReduce <- function(path_to_raw ){
     #Select only the things we care about.
     select( ! c(data )) %>%
     ungroup() %>%
-    select(!c(contributor_street_1))
+    select(!c(contributor_street_1, contributor_zip))
   
   return(data_test)
 }
