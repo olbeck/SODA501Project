@@ -19,7 +19,7 @@ make_adj_matix <- function(data, senators = NULL,
   # max_cont : maximum total contribution from contributor we want to consider, default = 1e10
   # min_times : minimum number of times a contributor donated to a single senator we want to consider, default = 1
   # max_times : maximum number of times a contributor donated to a single senator we want to consider, default = 1e5
-  # donor_type : list of types of donars we want to consider, if null we consider all types in data, options are PAC, COM, INK, ORG, CCM, PTY
+  # donor_type : list of types of donars we want to consider, if null we consider all types in data, options are PAC, COM, IND, ORG, CCM, PTY
   
   #### Output
   # an adjacent matrix for a network with the specified filtering criteria 
@@ -82,10 +82,10 @@ make_adj_matix <- function(data, senators = NULL,
   for(i in 1:(n-1)){ # row senator
     #get unique contributors for i^th senator 
     i_senator <- senator_list[i]
-    i_donars <- unique(data$contributor_name[data$senator_name == i_senator])
+    i_donars <- unique(dat_filter$contributor_name[dat_filter$senator_name == i_senator])
     for(j in (i+1):n){#column senator
       j_senator <- senator_list[j]
-      j_donars <- unique(data$contributor_name[data$senator_name == j_senator])
+      j_donars <- unique(dat_filter$contributor_name[dat_filter$senator_name == j_senator])
       #find the number of matches
       matches <- sum(i_donars %in% j_donars)
       #get the 
@@ -100,6 +100,8 @@ make_adj_matix <- function(data, senators = NULL,
 
 }
 
-test_output <- make_adj_matix(data = olivia_dat)  
-head(test_output)
+test_output1 <- make_adj_matix(data = olivia_dat, donor_type = c("IND"))  
+test_output2 <- make_adj_matix(data = olivia_dat, donor_type = c("PAC"))  
+head(test_output1)
+head(test_output2)
 
