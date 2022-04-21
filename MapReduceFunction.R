@@ -74,7 +74,7 @@ MapReduce <- function(path_to_raw ){
     #filter out dates 
     mutate(fec_election_year = as.numeric(fec_election_year)) %>%
     filter(fec_election_year <= "2022" & fec_election_year >= "2012") %>%
-    #change variable tyes
+    #change variable types
     mutate(contribution_receipt_amount = as.numeric(contribution_receipt_amount)) %>%
     #nest by senator and donor
     group_by(senator_name, contributor_name, fec_election_year, fec_election_type_descs) %>%
