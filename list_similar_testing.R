@@ -1,6 +1,6 @@
 #funtion to list the most simliar other senators for each senator
 
-list_similar <- function(adj_matix, senators){
+list_similar <- function(adj_matrix, senators){
   #### INPUTS
   # adj_matix : adjacent matrix, output of make_adj_matrix, n-by-n matrix
   # senator : input of senator names used in adj_matrix, length n
@@ -25,7 +25,10 @@ list_similar <- function(adj_matix, senators){
   
 }
 
-test_similar <- list_similar(test_output2, senators)
+senators <- unique(dat_all$senator_name)
 
-test_similar$angus_king
+test_similar <- list_similar(test_output1, senators)
 
+small_similar <- list_similar(small_donor_matrix, senators)
+
+save(small_donor_matrix, small_similar, file = "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/SODA501Project/Small.Rdata")
