@@ -100,7 +100,11 @@ make_adj_matix <- function(data, senators = NULL,
 
 }
 
+<<<<<<< HEAD
 test_output1 <- make_adj_matix(data = dat_all, donor_type = c("IND"))  
+=======
+test_output1 <- make_adj_matix(data = olivia_dat, min_cont = 5000)  
+>>>>>>> 4ea6406024543bb805256369ec1763f80bf55a1f
 test_output2 <- make_adj_matix(data = olivia_dat, donor_type = c("PAC"))  
 
 small_donor_matrix <-  make_adj_matix(data = dat_all, donor_type = c("IND"), max_cont = 500)  
