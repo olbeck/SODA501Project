@@ -89,8 +89,8 @@ MapReduce <- function(path_to_raw ){
 }
 
 #get reduced data
-raw_data_path <- "~/Downloads/"
+raw_data_path <- "~/Downloads/senators_tyler_joe/"
 summarized_data <- MapReduce(raw_data_path)
 
 #save as .Rdata to push to master repo 
-save(summarized_data, file = "~/Documents/SODA501Project/Joe_Data.Rdata")
+save(summarized_data, file = "~/Documents/SODA501Project/Joe_Tyler_Data.Rdata")
