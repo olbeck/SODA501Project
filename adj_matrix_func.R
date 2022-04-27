@@ -104,6 +104,7 @@ test_output1 <- make_adj_matix(data = olivia_dat, min_cont = 5000)
 test_output2 <- make_adj_matix(data = olivia_dat, donor_type = c("PAC"))  
 
 small_donor_matrix <-  make_adj_matix(data = dat_all, donor_type = c("IND"), max_cont = 500)  
+everything_matrix <-  make_adj_matix(data = dat_all)  
 
 
 head(test_output1)

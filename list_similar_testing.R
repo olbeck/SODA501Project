@@ -32,5 +32,5 @@ test_similar <- list_similar(test_output1, senators)
 small_similar <- list_similar(small_donor_matrix, senators)
 everything_similar <- list_similar(everything_matrix, senators)
 
-save(small_donor_matrix, small_similar, file = "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/SODA501Project/Everything.Rdata")
+save(small_donor_matrix, small_similar, file = "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/SODA501Project/Small.Rdata")
 save(everything_matrix, everything_similar, file = "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/SODA501Project/Everything.Rdata")
