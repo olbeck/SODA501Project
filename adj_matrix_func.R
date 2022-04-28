@@ -7,8 +7,8 @@ rm(summarized_data)
 
 make_adj_matix <- function(data, senators = NULL, 
                            years = NULL, elec_type= NULL, 
-                           min_cont = 1, max_cont = 1e10, 
-                           min_times = 1, max_times = 1e5,
+                           min_cont = 1, max_cont = 1e12, 
+                           min_times = 1, max_times = 1e10,
                            donor_type = NULL){
   ####INPUTS
   # data : all data we want to make a network on, this is the output from the MapReduce funciton
