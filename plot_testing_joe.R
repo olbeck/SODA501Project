@@ -5,10 +5,10 @@ load("~/Documents/SODA501Project/large_donor.Rdata")
 load("~/Documents/SODA501Project/Small.Rdata")
 
 senators <- colnames(everything_similar)
-left_d <- c("bernard_sanders", "Kirsten_Gillibrand", "jeff_merkley", "cory_booker", "Mazie_Hirono")
-right_d <- c("christopher_coons", "angus_king", "Jon_Tester", "Joe_Manchin", "Kyrsten_Sinema")
-right_r <- c("Marsha_Blackburn", "Joni_Ernst", "Mike_Braun", "ted_cruz", "james_inhofe")
-left_r <- c("Lisa_Murkowski", "richard_shelby", "susan_collins", "richard_burr", "rob_portman")
+left_d <- c("Kirsten_Gillibrand", "richard_blumenthal", "Mazie_Hirono")
+right_d <- c("Jon_Tester", "Joe_Manchin", "Kyrsten_Sinema")
+right_r <- c("Marsha_Blackburn", "Joni_Ernst", "Mike_Braun")
+left_r <- c("Lisa_Murkowski", "richard_shelby", "susan_collins")
 all_comp <- c(left_d, right_d, right_r, left_r)
 column_pos <- which(senators %in% all_comp)
 
@@ -17,23 +17,33 @@ g <-
                               weighted = T,
                               mode = c("undirected"))
 
-E(g)$width <- log(E(g)$weight) + min(E(g)$weight) + 1
-V(g)$name <- senators
-
 plot(g,
      vertex.color = vertex_attr(g)$cor,
-     vertex.label = NA,
-     edge.width = 3 * (edge_attr(g)$weight) / 10000,
+     vertex.label = all_comp,
+     vertex.size = 2 * igraph::degree(g) ,
+     edge.width = 3 * (edge_attr(g)$weight) / 1000,
      layout = layout_in_circle)
 
-names <- c(rep(NA, 12), "Chuck Schumer", NA, "Chris Coons", 
-           rep(NA, 8), "dianne_feinstein", rep(NA, 2),
-           "gary_peters", rep(NA, 4), "jeanne_shaheen", NA)
+g2 <-
+  graph_from_adjacency_matrix(large_donor_matrix[column_pos, column_pos],
+                              weighted = T,
+                              mode = c("undirected"))
 
-plot(g,
+plot(g2,
      vertex.color = vertex_attr(g)$cor,
-     vertex.label = senators[1:5],
-     vertex.size = 2*igraph::degree(g) ,
-     edge.width = 3*(edge_attr(g)$weight) / 10000,
-     layout = layout_in_circle
-)
+     vertex.label = all_comp,
+     vertex.size = 2 * igraph::degree(g) ,
+     edge.width = 3 * (edge_attr(g)$weight) / 1000,
+     layout = layout_in_circle)
+
+g3 <-
+  graph_from_adjacency_matrix(small_donor_matrix[column_pos, column_pos],
+                              weighted = T,
+                              mode = c("undirected"))
+
+plot(g3,
+     vertex.color = vertex_attr(g)$cor,
+     vertex.label = all_comp,
+     vertex.size = 2 * igraph::degree(g) ,
+     edge.width = 3 * (edge_attr(g)$weight) / 1000,
+     layout = layout_in_circle)
