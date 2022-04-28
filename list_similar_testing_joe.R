@@ -25,11 +25,10 @@ list_similar <- function(adj_matrix, senators){
   
 }
 
-test_output1 <- make_adj_matix(data = dat_all, donor_type = c("IND"))  
-senators <- unique(dat_all$senator_name)
-test_similar <- list_similar(test_output1, senators)
+# test_output1 <- make_adj_matix(data = dat_all, donor_type = c("IND"))  
+# senators <- unique(dat_all$senator_name)
+# test_similar <- list_similar(test_output1, senators)
 
-test_output2 <- make_adj_matix(data = dat_all, min_cont = 5000)
-senators <- unique(data_all$senator_name)
-test_similar2 <- list_similar(test_output2, senators)
-large_donor_large_senator <- test_similar2
+large_donor_matrix <- make_adj_matix(data = dat_all, min_cont = 5000)
+senators <- unique(dat_all$senator_name)
+large_similar <- list_similar(large_donor_matrix, senators)
