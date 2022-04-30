@@ -38,3 +38,16 @@ dat_all[dat_all$senator_name %in% c("raphael_warnock1", "raphael_warnock2"), "se
 data.frame(c(sort(unique(dat_all$senator_name)), NA, NA, NA, NA),
            sen_names)
 #missing Mike Rounds,  Richard Durbin, Robert Casey, Robert Menendez
+
+
+
+######################### 
+# Still missing 1 senator : Mike Rounds
+cbind(c(sort( unique(dat_all$senator_name)), NA    ) , sen_names)
+
+#file_location
+loc <- "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/MikeRounds"
+
+rounds_data <- MapReduce(loc)
+save(rounds_data, file = "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/SODA501Project/Mike_Data.Rdata")
+
