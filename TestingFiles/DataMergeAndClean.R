@@ -51,3 +51,4 @@ loc <- "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SO
 rounds_data <- MapReduce(loc)
 save(rounds_data, file = "/Users/oliviabeck/Dropbox/Olivia/Conflict/school/SODA501/FinalProject_SODA501/SODA501Project/Mike_Data.Rdata")
 
+dat_all<- rbind(dat_all, rounds_data)
