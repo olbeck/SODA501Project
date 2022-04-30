@@ -1,14 +1,13 @@
 library(igraph)
-library(stringr)
 load("~/Documents/SODA501Project/Everything.Rdata")
 load("~/Documents/SODA501Project/large_donor.Rdata")
 load("~/Documents/SODA501Project/Small.Rdata")
 
 senators <- colnames(everything_similar)
-left_d <- c("Kirsten_Gillibrand", "richard_blumenthal", "Mazie_Hirono")
-right_d <- c("Jon_Tester", "Joe_Manchin", "Kyrsten_Sinema")
-right_r <- c("Marsha_Blackburn", "Joni_Ernst", "Mike_Braun")
-left_r <- c("Lisa_Murkowski", "richard_shelby", "susan_collins")
+left_d <- c("bernard_sanders", "Kirsten_Gillibrand", "jeff_merkley", "cory_booker", "Mazie_Hirono")
+right_d <- c( "Kyrsten_Sinema", "Joe_Manchin", "Jon_Tester", "angus_king", "christopher_coons")
+right_r <- c("Marsha_Blackburn", "Joni_Ernst", "Mike_Braun", "ted_cruz", "james_inhofe")
+left_r <- c("Lisa_Murkowski", "richard_shelby", "susan_collins", "richard_burr", "rob_portman")
 all_comp <- c(left_d, right_d, right_r, left_r)
 column_pos <- which(senators %in% all_comp)
 
@@ -21,7 +20,7 @@ plot(g,
      vertex.color = vertex_attr(g)$cor,
      vertex.label = all_comp,
      vertex.size = 2 * igraph::degree(g) ,
-     edge.width = 3 * (edge_attr(g)$weight) / 1000,
+     edge.width = 3 * (edge_attr(g)$weight) / 500,
      layout = layout_in_circle)
 
 g2 <-
